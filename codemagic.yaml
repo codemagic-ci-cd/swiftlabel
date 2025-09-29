@@ -33,7 +33,7 @@ workflows:
       cache:
         cache_paths:
           - $HOME/Library/Developer/Xcode/DerivedData/CompilationCache.noindex
-          - $HIME/Library/Developer/Xcode/DerivedData/ModuleCache.noindex
+          - $HOME/Library/Developer/Xcode/DerivedData/ModuleCache.noindex
       triggering:
         events:
           - push
