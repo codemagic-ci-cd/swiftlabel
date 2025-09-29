@@ -32,7 +32,7 @@ workflows:
           - aws_credentials
       cache:
         cache_paths:
-          - ~/Library/Developer/Xcode/DerivedData/CompilationCache.noindex
+          - $HOME/Library/Developer/Xcode/DerivedData/CompilationCache.noindex
       triggering:
         events:
           - push
