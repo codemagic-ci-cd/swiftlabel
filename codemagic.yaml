@@ -21,6 +21,7 @@ workflows:
       labels:
         - ${CLIENT_ID}
       environment:
+        xcode: 26.0.1
         cocoapods: default
         vars:
           <<: *env_vars
@@ -29,6 +30,9 @@ workflows:
 
         groups:
           - aws_credentials
+      cache:
+        cache_paths:
+          - ~/Library/Developer/Xcode/DerivedData/CompilationCache.noindex
       triggering:
         events:
           - push
