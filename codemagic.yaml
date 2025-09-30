@@ -83,7 +83,7 @@ workflows:
               -scheme "${XCODE_SCHEME}" \
               -destination generic/platform=iOS \
               build \
-            COMPILATION_CACHE_ENABLE_CACHING=True
+            COMPILATION_CACHE_ENABLE_CACHING=YES
       artifacts:
         - build/ios/ipa/*.ipa
         - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
