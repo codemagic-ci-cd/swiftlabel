@@ -79,13 +79,13 @@ workflows:
 
         - name: Build ipa for distribution
           script: |
-            xcode-project build-ipa --workspace "${XCODE_SCHEME}.xcworkspace" --scheme "${XCODE_SCHEME}" --archive-xcargs "COMPILATION_CACHE_ENABLE_CACHING=True"
+            # xcode-project build-ipa --workspace "${XCODE_SCHEME}.xcworkspace" --scheme "${XCODE_SCHEME}" --archive-xcargs "COMPILATION_CACHE_ENABLE_CACHING=True"
             
-            # xcodebuild -workspace "${XCODE_SCHEME}.xcworkspace" \
-            #   -scheme "${XCODE_SCHEME}" \
-            #   -destination generic/platform=iOS \
-            #   build \
-            # COMPILATION_CACHE_ENABLE_CACHING=YES
+            xcodebuild -workspace "${XCODE_SCHEME}.xcworkspace" \
+              -scheme "${XCODE_SCHEME}" \
+              -destination generic/platform=iOS \
+              build \
+            COMPILATION_CACHE_ENABLE_CACHING=YES
       artifacts:
         - build/ios/ipa/*.ipa
         - /tmp/xcodebuild_logs/*.log
