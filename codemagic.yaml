@@ -17,6 +17,7 @@ definitions:
 workflows:
     ios-workflow:
       name: iOS Workflow
+      instance_type: mac_studio_m4_max
       labels:
         - ${CLIENT_ID}
       environment:
