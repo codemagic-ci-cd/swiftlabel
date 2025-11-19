@@ -1,6 +1,6 @@
 definitions:     
   env_vars: &env_vars
-    S3_BUCKET_NAME: cmswiftwhitelabel # The name of your S3 bucket that have all of your clients assets.
+    S3_BUCKET_NAME: cmswiftwhitelabel
     APP_ICON: AppIcon.appiconset
     HEADER: header.imageset
     LAUNCH_SCREEN: launchScreenColor.colorset
@@ -12,7 +12,6 @@ definitions:
         echo "ASSETS_FOLDER=$ASSETS_FOLDER" >> $CM_ENV
         
         aws s3 cp s3://$S3_BUCKET_NAME/$ASSETS_FOLDER.tar.gz $ASSETS_FOLDER.tar.gz
-        # unzip $ASSETS_FOLDER.zip -d $ASSETS_FOLDER
         tar -zxvf $ASSETS_FOLDER.tar.gz
 
 workflows:
@@ -54,7 +53,7 @@ workflows:
         - name: Change App Icon
           script: cp -r ./$ASSETS_FOLDER/$APP_ICON ./${XCODE_SCHEME}/Assets.xcassets/
 
-        - name: Change Launch Sreen Color
+        - name: Change Launch Screen Color
           script: cp -r ./$ASSETS_FOLDER/$LAUNCH_SCREEN ./${XCODE_SCHEME}/Assets.xcassets/
 
         - name: Change Header Image
@@ -69,27 +68,15 @@ workflows:
             app-store-connect fetch-signing-files "$BUNDLE_ID" --type IOS_APP_STORE --create
             keychain add-certificates
             xcode-project use-profiles
-        - name: Install CocoaPods dependencies
-          script: |
-            pod install
         - name: Increment build number
           script: |
-            # agvtool new-version -all $(($BUILD_NUMBER + 1))
             agvtool new-version -all $(($(app-store-connect get-latest-testflight-build-number "$APP_STORE_ID") + 1))
-
         - name: Build ipa for distribution
           script: |
             xcode-project build-ipa \
-              --workspace "${XCODE_SCHEME}.xcworkspace" \
+              --workspace "${XCODE_SCHEME}.xcodeproj" \
               --scheme "${XCODE_SCHEME}" \
               --archive-xcargs "COMPILATION_CACHE_ENABLE_CACHING=True"
-            
-            # xcodebuild \
-            # -workspace "${XCODE_SCHEME}.xcworkspace" \
-            #   -scheme "${XCODE_SCHEME}" \
-            #   -destination generic/platform=iOS \
-            #   build \
-            #   COMPILATION_CACHE_ENABLE_CACHING=YES
       artifacts:
         - build/ios/ipa/*.ipa
         - /tmp/xcodebuild_logs/*.log

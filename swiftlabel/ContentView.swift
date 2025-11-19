@@ -125,10 +125,13 @@ struct InfoCardView: View {
                     .padding(.bottom, 5)
                     .padding(.horizontal)
                 
-                FlowLayout(items: amenities)
-                    .padding(.horizontal)
-                    .padding(.bottom, 10)
-                    .foregroundColor(.black) // Ensure text in amenities is dark
+                GeometryReader { geometry in
+                    FlowLayout(items: amenities, maxWidth: geometry.size.width)
+                        .padding(.horizontal)
+                        .padding(.bottom, 10)
+                        .foregroundColor(.black) // Ensure text in amenities is dark
+                }
+                .frame(height: calculateFlowLayoutHeight(for: amenities)) // Prevent GeometryReader from expanding
                 
                 Divider()
                 
@@ -168,6 +171,14 @@ struct InfoCardView: View {
         .fullScreenCover(isPresented: $showLocationView) {
             LocationView()
         }
+    }
+    
+    // A simple estimated height to constrain the GeometryReader
+    private func calculateFlowLayoutHeight(for items: [String]) -> CGFloat {
+        // Heuristic: assume ~2 rows at minimum; adjust if you expect more
+        let minRowHeight: CGFloat = 28 // approx pill height
+        let minRows: CGFloat = 2
+        return minRowHeight * minRows + 20
     }
 }
 
@@ -298,13 +309,14 @@ struct RoundedCorners: Shape {
 
 struct FlowLayout: View {
     let items: [String]
+    let maxWidth: CGFloat
     let spacing: CGFloat = 5
     var pillColor: Color = loadColor(from: "Config", key: "pillColor")
     var pillTextColor: Color = loadColor(from: "Config", key: "pillTextColor")
 
     var body: some View {
         VStack(alignment: .leading, spacing: spacing) {
-            ForEach(self.rows(), id: \.self) { rowItems in
+            ForEach(self.rows(maxWidth: maxWidth), id: \.self) { rowItems in
                 HStack(spacing: spacing) {
                     ForEach(rowItems, id: \.self) { item in
                         Text(item)
@@ -322,15 +334,14 @@ struct FlowLayout: View {
         }
     }
 
-    private func rows() -> [[String]] {
+    private func rows(maxWidth: CGFloat) -> [[String]] {
         var rows: [[String]] = [[]]
         var currentWidth: CGFloat = 0
-        let screenWidth = UIScreen.main.bounds.width
 
         for item in items {
             let itemWidth = item.size(withAttributes: [.font: UIFont.systemFont(ofSize: 12)]).width + 16 + 8 // Text width + padding
 
-            if currentWidth + itemWidth + spacing > screenWidth {
+            if currentWidth + itemWidth + spacing > maxWidth {
                 rows.append([item])
                 currentWidth = itemWidth
             } else {
@@ -410,4 +421,3 @@ struct ContentView: View {
 #Preview {
     ContentView()
 }
-
