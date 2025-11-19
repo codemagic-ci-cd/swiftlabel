@@ -25,15 +25,15 @@ workflows:
         vars:
           <<: *env_vars
           XCODE_SCHEME: swiftlabel
-          CLIENT_ID: "_"
+          # CLIENT_ID: "_"
 
         groups:
           - aws_credentials
-      cache:
-        cache_paths:
-          - $HOME/Library/Developer/Xcode/DerivedData/CompilationCache.noindex
-          # - $HOME/Library/Developer/Xcode/DerivedData/ModuleCache.noindex
-          # - Users/builder/Library/Developer/Xcode/DerivedData/ModuleCache.noindex
+      # cache:
+      #   cache_paths:
+      #     - $HOME/Library/Developer/Xcode/DerivedData/CompilationCache.noindex
+      #     # - $HOME/Library/Developer/Xcode/DerivedData/ModuleCache.noindex
+      #     # - Users/builder/Library/Developer/Xcode/DerivedData/ModuleCache.noindex
       triggering:
         events:
           - push
@@ -65,7 +65,7 @@ workflows:
         - name: iOS code signing
           script: |
             keychain initialize
-            app-store-connect fetch-signing-files "$BUNDLE_ID" --type IOS_APP_STORE --create
+            app-store-connect fetch-signing-files "$BUNDLE_ID" --type IOS_APP_STORE
             keychain add-certificates
             xcode-project use-profiles
         - name: Increment build number
