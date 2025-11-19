@@ -81,7 +81,7 @@ struct InfoCardView: View {
                         .clipped()
                         .mask(RoundedCorners(tl: 0, tr: 0, bl: 30, br: 30))
                         .edgesIgnoringSafeArea(.top)
-                        .padding(.top, -60)
+                        .padding(.top, -65)
                     
                     Text(hotelName)
                         .font(.largeTitle)
