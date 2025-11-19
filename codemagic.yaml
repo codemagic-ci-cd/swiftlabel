@@ -4,15 +4,15 @@ definitions:
     APP_ICON: AppIcon.appiconset
     HEADER: header.imageset
     LAUNCH_SCREEN: launchScreenColor.colorset
-  scripts:
-    - &get_assets
-      name: Get assets from AWS S3 bucket
-      script: |
-        ASSETS_FOLDER=assets_${CLIENT_ID}
-        echo "ASSETS_FOLDER=$ASSETS_FOLDER" >> $CM_ENV
+  # scripts:
+  #   - &get_assets
+  #     name: Get assets from AWS S3 bucket
+  #     script: |
+  #       ASSETS_FOLDER=assets_${CLIENT_ID}
+  #       echo "ASSETS_FOLDER=$ASSETS_FOLDER" >> $CM_ENV
         
-        aws s3 cp s3://$S3_BUCKET_NAME/$ASSETS_FOLDER.tar.gz $ASSETS_FOLDER.tar.gz
-        tar -zxvf $ASSETS_FOLDER.tar.gz
+  #       aws s3 cp s3://$S3_BUCKET_NAME/$ASSETS_FOLDER.tar.gz $ASSETS_FOLDER.tar.gz
+  #       tar -zxvf $ASSETS_FOLDER.tar.gz
 
 workflows:
     ios-workflow:
@@ -43,7 +43,7 @@ workflows:
             include: true
             source: true
       scripts:
-        - *get_assets
+        - make fetch-assets
 
         - name: Change iOS app name
           script: /usr/libexec/PlistBuddy -c "Set :CFBundleName $APP_NAME" -c "Set :CFBundleDisplayName $APP_NAME" ./${XCODE_SCHEME}/Info.plist
