@@ -43,6 +43,6 @@ increment-build-number:
 .PHONY: build-ipa
 build-ipa:
 	xcode-project build-ipa \
-		--workspace "$$XCODE_SCHEME.xcworkspace" \
+		--project "$$XCODE_SCHEME.xcodeproj" \
 		--scheme "$$XCODE_SCHEME" \
 		--archive-xcargs "COMPILATION_CACHE_ENABLE_CACHING=True"
