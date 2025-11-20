@@ -8,12 +8,10 @@ definitions:
 workflows:
     ios-workflow:
       name: iOS Workflow
-      instance_type: mac_mini_m4
       labels:
         - ${CLIENT_ID}
       environment:
         xcode: 26
-        cocoapods: default
         vars:
           <<: *env_vars
           XCODE_SCHEME: swiftlabel
@@ -26,13 +24,6 @@ workflows:
           - $HOME/Library/Developer/Xcode/DerivedData/CompilationCache.noindex
           # - $HOME/Library/Developer/Xcode/DerivedData/ModuleCache.noindex
           # - Users/builder/Library/Developer/Xcode/DerivedData/ModuleCache.noindex
-      triggering:
-        events:
-          - push
-        branch_patterns:
-          - pattern: 'main'
-            include: true
-            source: true
       scripts:
         - make fetch-assets
         - make set-app-name
@@ -41,22 +32,8 @@ workflows:
         - make set-header-image
         - make set-config-plist
         - make ios-code-sign
-       
-        # - name: iOS code signing
-        #   script: |
-        #     keychain initialize
-        #     app-store-connect fetch-signing-files "$BUNDLE_ID" --type IOS_APP_STORE
-        #     keychain add-certificates
-        #     xcode-project use-profiles
-        - name: Increment build number
-          script: |
-            agvtool new-version -all $(($(app-store-connect get-latest-testflight-build-number "$APP_STORE_ID") + 1))
-        - name: Build ipa for distribution
-          script: |
-            xcode-project build-ipa \
-              --project "${XCODE_SCHEME}.xcodeproj" \
-              --scheme "${XCODE_SCHEME}" \
-              --archive-xcargs "COMPILATION_CACHE_ENABLE_CACHING=True"
+        - make increment-build-number
+        - make build-ipa
       artifacts:
         - build/ios/ipa/*.ipa
         - /tmp/xcodebuild_logs/*.log
