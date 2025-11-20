@@ -19,11 +19,11 @@ set-bundle-id:
 
 .PHONY: set-launch-color
 set-launch-color:
-	cp -r ./$$ASSETS_FOLDER/$LAUNCH_SCREEN ./$$XCODE_SCHEME/Assets.xcassets/
+	cp -r ./$$ASSETS_FOLDER/$$LAUNCH_SCREEN ./$$XCODE_SCHEME/Assets.xcassets/
 	
 .PHONY: set-header-image
 set-header-image:
-	cp -r ./$$ASSETS_FOLDER/$HEADER ./$$XCODE_SCHEME/Assets.xcassets/
+	cp -r ./$$ASSETS_FOLDER/$$HEADER ./$$XCODE_SCHEME/Assets.xcassets/
 
 .PHONY: set-config-plist
 set-config-plist:
