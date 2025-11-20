@@ -4,7 +4,7 @@ definitions:
     APP_ICON: AppIcon.appiconset
     HEADER: header.imageset
     LAUNCH_SCREEN: launchScreenColor.colorset
-
+    
 workflows:
     ios-workflow:
       name: iOS Workflow
@@ -34,15 +34,20 @@ workflows:
             include: true
             source: true
       scripts:
-        - name: Customize app assets
-          script: make fetch-assets set-app-name set-bundle-id set-launch-color set-header-image set-config-plist
-
-        - name: iOS code signing
-          script: |
-            keychain initialize
-            app-store-connect fetch-signing-files "$BUNDLE_ID" --type IOS_APP_STORE
-            keychain add-certificates
-            xcode-project use-profiles
+        - make fetch-assets
+        - make set-app-name
+        - make set-bundle-id
+        - make set-launch-color
+        - make set-header-image
+        - make set-config-plist
+        - make ios-code-sign
+       
+        # - name: iOS code signing
+        #   script: |
+        #     keychain initialize
+        #     app-store-connect fetch-signing-files "$BUNDLE_ID" --type IOS_APP_STORE
+        #     keychain add-certificates
+        #     xcode-project use-profiles
         - name: Increment build number
           script: |
             agvtool new-version -all $(($(app-store-connect get-latest-testflight-build-number "$APP_STORE_ID") + 1))
