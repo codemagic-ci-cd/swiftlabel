@@ -14,7 +14,7 @@ set-app-name:
 
 .PHONY: set-app-icon
 set-app-icon:
-	source $$CM_ENV && \
+	. $$CM_ENV && \
 	cp -r ./$$ASSETS_FOLDER/$$APP_ICON ./$$XCODE_SCHEME/Assets.xcassets/
 
 .PHONY: set-bundle-id
@@ -23,14 +23,17 @@ set-bundle-id:
 
 .PHONY: set-launch-color
 set-launch-color:
+	. $$CM_ENV && \
 	cp -r ./$$ASSETS_FOLDER/$$LAUNCH_SCREEN ./$$XCODE_SCHEME/Assets.xcassets/
 	
 .PHONY: set-header-image
 set-header-image:
+	. $$CM_ENV && \
 	cp -r ./$$ASSETS_FOLDER/$$HEADER ./$$XCODE_SCHEME/Assets.xcassets/
 
 .PHONY: set-config-plist
 set-config-plist:
+	. $$CM_ENV && \
 	cp -r ./$$ASSETS_FOLDER/Config.plist ./$$XCODE_SCHEME/
 
 .PHONY: ios-code-sign
