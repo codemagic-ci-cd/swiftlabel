@@ -14,7 +14,6 @@ set-app-name:
 
 .PHONY: set-app-icon
 set-app-icon:
-	. $$CM_ENV; \
 	cp -r ./$$ASSETS_FOLDER/$$APP_ICON ./$$XCODE_SCHEME/Assets.xcassets/
 
 .PHONY: set-bundle-id
