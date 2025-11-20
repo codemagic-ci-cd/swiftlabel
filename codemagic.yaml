@@ -25,7 +25,7 @@ workflows:
           # - $HOME/Library/Developer/Xcode/DerivedData/ModuleCache.noindex
           # - Users/builder/Library/Developer/Xcode/DerivedData/ModuleCache.noindex
       scripts:
-        - make customize-app
+        - make -d customize-app
         # - make fetch-assets
         # - make set-app-name
         # - make set-app-icon
