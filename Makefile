@@ -38,7 +38,7 @@ ios-code-sign:
 	
 .PHONY: increment-build-number
 increment-build-number:
-	agvtool new-version -all $(($(app-store-connect get-latest-testflight-build-number $$APP_STORE_ID) + 1))
+	agvtool new-version -all $$(($$(app-store-connect get-latest-testflight-build-number $$APP_STORE_ID) + 1))
 	
 .PHONY: build-ipa
 build-ipa:
