@@ -25,12 +25,12 @@ workflows:
           # - $HOME/Library/Developer/Xcode/DerivedData/ModuleCache.noindex
           # - Users/builder/Library/Developer/Xcode/DerivedData/ModuleCache.noindex
       scripts:
-        - make customize-app
-        # - make set-app-name
-        # - make set-bundle-id
-        # - make set-launch-color
-        # - make set-header-image
-        # - make set-config-plist
+        - make fetch-assets
+        - make set-app-name
+        - make set-bundle-id
+        - make set-launch-color
+        - make set-header-image
+        - make set-config-plist
         - make ios-code-sign
         - make increment-build-number
         - make build-ipa

@@ -1,5 +1,5 @@
 .PHONY: customize-app
-customize-app: fetch-assets set-app-name set-bundle-id set-launch-color set-header-image set-config-plist
+customize-app: fetch-assets set-app-name set-app-icon set-bundle-id set-launch-color set-header-image set-config-plist
 
 .PHONY: fetch-assets
 fetch-assets:
@@ -14,6 +14,7 @@ set-ios-app-name:
 
 .PHONY: set-app-icon
 set-app-icon:
+	. $$CM_ENV; \
 	cp -r ./$$ASSETS_FOLDER/$$APP_ICON ./$$XCODE_SCHEME/Assets.xcassets/
 
 .PHONY: set-bundle-id
