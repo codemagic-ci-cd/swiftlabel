@@ -1,3 +1,6 @@
+.PHONY: customize-app
+customize-app: fetch-assets set-app-name set-bundle-id set-launch-color set-header-image set-config-plist
+
 .PHONY: fetch-assets
 fetch-assets:
 	ASSETS_FOLDER="assets_$$CLIENT_ID" && \
