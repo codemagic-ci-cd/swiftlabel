@@ -9,7 +9,7 @@ fetch-assets:
 	tar -zxvf "$$ASSETS_FOLDER.tar.gz"
 
 .PHONY: set-app-name
-set-ios-app-name:
+set-app-name:
 	/usr/libexec/PlistBuddy -c "Set :CFBundleName $$APP_NAME" -c "Set :CFBundleDisplayName $$APP_NAME" ./$$XCODE_SCHEME/Info.plist
 
 .PHONY: set-app-icon

@@ -27,6 +27,7 @@ workflows:
       scripts:
         - make fetch-assets
         - make set-app-name
+        - make set-app-icon
         - make set-bundle-id
         - make set-launch-color
         - make set-header-image
