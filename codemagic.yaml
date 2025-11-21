@@ -1,42 +1,33 @@
-definitions:     
-  # env_vars: &env_vars
-  #   S3_BUCKET_NAME: cmswiftwhitelabel
-  #   APP_ICON: AppIcon.appiconset
-  #   HEADER: header.imageset
-  #   LAUNCH_SCREEN: launchScreenColor.colorset
-    
 workflows:
-    ios-workflow:
-      name: iOS Workflow
-      labels:
-        - ${CLIENT_ID}
-      environment:
-        xcode: 26
-        vars:
-          XCODE_SCHEME: swiftlabel
-          CLIENT_ID: "_"
-
-        groups:
-          - aws_credentials
-          - app_customization
-      cache:
-        cache_paths:
-          - $HOME/Library/Developer/Xcode/DerivedData/CompilationCache.noindex
-          # - $HOME/Library/Developer/Xcode/DerivedData/ModuleCache.noindex
-          # - Users/builder/Library/Developer/Xcode/DerivedData/ModuleCache.noindex
-      scripts:
-        - make customize-app
-        - make ios-code-sign
-        - make increment-build-number
-        - make build-ipa
-      artifacts:
-        - build/ios/ipa/*.ipa
-        - /tmp/xcodebuild_logs/*.log
-        - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
-      publishing:
-        app_store_connect:
-          api_key: $APP_STORE_CONNECT_PRIVATE_KEY
-          key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER
-          issuer_id: $APP_STORE_CONNECT_ISSUER_ID
+  ios-workflow:
+    name: iOS Workflow
+    labels:
+      - ${CLIENT_ID}
+    environment:
+      xcode: 26
+      vars:
+        XCODE_SCHEME: swiftlabel
+        CLIENT_ID: "_"
+      groups:
+        - aws_credentials
+        - app_customization
+    cache:
+      cache_paths:
+        - $HOME/Library/Developer/Xcode/DerivedData/CompilationCache.noindex
+        - $HOME/Library/Developer/Xcode/DerivedData/ModuleCache.noindex
+    scripts:
+      - make customize-app
+      - make ios-code-sign
+      - make increment-build-number
+      - make build-ipa
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
+    publishing:
+      app_store_connect:
+        api_key: $APP_STORE_CONNECT_PRIVATE_KEY
+        key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER
+        issuer_id: $APP_STORE_CONNECT_ISSUER_ID
 
 
