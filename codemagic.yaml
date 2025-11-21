@@ -1,9 +1,9 @@
 definitions:     
-  env_vars: &env_vars
-    S3_BUCKET_NAME: cmswiftwhitelabel
-    APP_ICON: AppIcon.appiconset
-    HEADER: header.imageset
-    LAUNCH_SCREEN: launchScreenColor.colorset
+  # env_vars: &env_vars
+  #   S3_BUCKET_NAME: cmswiftwhitelabel
+  #   APP_ICON: AppIcon.appiconset
+  #   HEADER: header.imageset
+  #   LAUNCH_SCREEN: launchScreenColor.colorset
     
 workflows:
     ios-workflow:
@@ -13,12 +13,12 @@ workflows:
       environment:
         xcode: 26
         vars:
-          <<: *env_vars
           XCODE_SCHEME: swiftlabel
           CLIENT_ID: "_"
 
         groups:
           - aws_credentials
+          - app_customization
       cache:
         cache_paths:
           - $HOME/Library/Developer/Xcode/DerivedData/CompilationCache.noindex
@@ -26,13 +26,6 @@ workflows:
           # - Users/builder/Library/Developer/Xcode/DerivedData/ModuleCache.noindex
       scripts:
         - make customize-app
-        # - make fetch-assets
-        # - make set-app-name
-        # - make set-app-icon
-        # - make set-bundle-id
-        # - make set-launch-color
-        # - make set-header-image
-        # - make set-config-plist
         - make ios-code-sign
         - make increment-build-number
         - make build-ipa
