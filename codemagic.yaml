@@ -1,22 +1,16 @@
 workflows:
   ios-workflow:
     name: iOS Workflow
-    inputs:
-      clientId:
-        description: Client ID
-        type: string
-        default: dev
     labels:
       - ${CLIENT_ID}
     environment:
       xcode: 26
       vars:
         XCODE_SCHEME: swiftlabel
-        CLIENT_ID: ${{ inputs.clientId }}
+        CLIENT_ID: "_"
       groups:
         - aws_credentials
         - app_customization
-        - "client_${CLIENT_ID}"
     cache:
       cache_paths:
         - $HOME/Library/Developer/Xcode/DerivedData/CompilationCache.noindex
