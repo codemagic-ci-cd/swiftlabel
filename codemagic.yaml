@@ -14,7 +14,6 @@ workflows:
     cache:
       cache_paths:
         - $HOME/Library/Developer/Xcode/DerivedData/CompilationCache.noindex
-        - $HOME/Library/Developer/Xcode/DerivedData/ModuleCache.noindex
     scripts:        
       - name: 🎨 Customize app
         script: make customize-app
