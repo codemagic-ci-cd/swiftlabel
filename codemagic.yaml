@@ -16,6 +16,7 @@ workflows:
       groups:
         - aws_credentials
         - app_customization
+        - client_${{ inputs.clientId }}
     cache:
       cache_paths:
         - $HOME/Library/Developer/Xcode/DerivedData/CompilationCache.noindex
