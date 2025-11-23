@@ -21,6 +21,9 @@ workflows:
         - $HOME/Library/Developer/Xcode/DerivedData/CompilationCache.noindex
         - $HOME/Library/Developer/Xcode/DerivedData/ModuleCache.noindex
     scripts:
+      - name: check client id
+        script: echo $CLIENT_ID
+        
       - name: 🎨 Customize app
         script: make customize-app
 
