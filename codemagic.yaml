@@ -16,10 +16,14 @@ workflows:
         - $HOME/Library/Developer/Xcode/DerivedData/CompilationCache.noindex
         - $HOME/Library/Developer/Xcode/DerivedData/ModuleCache.noindex
     scripts:
-      - make customize-app
-      - make ios-code-sign
-      - make increment-build-number
-      - make build-ipa
+      - name: 🎨 Customize app
+        script: make customize-app
+
+      - name: 📝 Code signing
+        script: make ios-code-sign
+        
+      - name: 🛠️ Build IPA
+        script: make build-ipa
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log

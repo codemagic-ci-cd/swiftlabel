@@ -49,6 +49,7 @@ increment-build-number:
 	
 .PHONY: build-ipa
 build-ipa:
+    agvtool new-version -all $$(($$(app-store-connect get-latest-testflight-build-number $$APP_STORE_ID) + 1)) && \
 	xcode-project build-ipa \
 		--project "$$XCODE_SCHEME.xcodeproj" \
 		--scheme "$$XCODE_SCHEME" \
