@@ -1,13 +1,18 @@
 workflows:
   ios-workflow:
     name: iOS Workflow
+    inputs:
+      clientId:
+        description: Client ID
+        type: string
+        default: dev
     labels:
       - ${CLIENT_ID}
     environment:
       xcode: 26
       vars:
         XCODE_SCHEME: swiftlabel
-        CLIENT_ID: "_"
+        CLIENT_ID: ${{ inputs.clientId }}
       groups:
         - aws_credentials
         - app_customization
@@ -21,7 +26,7 @@ workflows:
 
       - name: 📝 Code signing
         script: make ios-code-sign
-        
+
       - name: 🛠️ Build IPA
         script: make build-ipa
     artifacts:
