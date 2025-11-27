@@ -1,0 +1,39 @@
+curl -s -H "Content-Type: application/json" -H "x-auth-token: {{token}}" \
+      --data '{
+          "appId": "66bca37e8b0960e2a18843bf", 
+          "workflowId": "ios-workflow",
+          "branch": "staging",
+          "environment": { 
+              "variables": { 
+                  "CLIENT_ID": "001"
+              },
+              "groups": [
+                  "client_001"
+              ]
+          },
+          "sshAccessEnabled": false
+        }' \
+       https://api.codemagic.io/builds | jq -r '.buildId'
+
+
+
+
+### Trigger Codemagic build
+POST https://api.codemagic.io/builds
+Content-Type: application/json
+x-auth-token: {{token}}
+
+{
+  "appId": "66bca37e8b0960e2a18843bf",
+  "workflowId": "ios-workflow",
+  "branch": "staging",
+  "environment": {
+    "variables": {
+      "CLIENT_ID": "001"
+    },
+    "groups": [
+      "client_001"
+    ]
+  },
+  "sshAccessEnabled": false
+}
