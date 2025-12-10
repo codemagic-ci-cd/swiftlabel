@@ -3,10 +3,6 @@ workflows:
     name: iOS Workflow
     labels:
       - ${CLIENT_ID}
-    inputs:
-      client_id:
-        description: Client Identifier
-        type: string
     environment:
       xcode: 26
       vars:
@@ -18,10 +14,7 @@ workflows:
     cache:
       cache_paths:
         - $HOME/Library/Developer/Xcode/DerivedData/CompilationCache.noindex
-    scripts:
-      - name: Export client Id
-        script: echo "CLIENT_ID=${{ inputs.client_id }}" >> $CM_ENV
-
+    scripts:        
       - name: 🎨 Customize app
         script: make customize-app
 
